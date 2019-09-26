@@ -1,0 +1,3 @@
+{
+    "mongoURI": "mongodb+srv://mfkhan:abc831456@cluster0-mt7gl.mongodb.net/devprofile-dev?retryWrites=true&w=majority"
+}
