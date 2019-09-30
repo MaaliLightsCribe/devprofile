@@ -1,12 +1,32 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const router = express.Router();
+const bodyParser = require('body-parser');
+
+
+//Load Routes:
+const userRoutes = require('./routes/api/user');
+const authRoutes = require('./routes/api/auth');
+const profileRoutes = require('./routes/api/profile');
 
 const app = express();
 
 //Connect Database:
 connectDB();
 
+//Body Parser Middleware
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+//Define Routes:
 app.get('/', (req, res) => res.send('API Running'))
+
+router.use('/api/users', userRoutes);
+router.use('/api/auth', authRoutes);
+router.use('/api/profile', profileRoutes);
+
+
+app.use(router);
 
 
 

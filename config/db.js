@@ -3,13 +3,18 @@ const config = require('config');
 
 const db = config.get('mongoURI');
 
+// Map Global Promise - get rid of warning 
+mongoose.Promise = global.Promise;
+
 const connectDB = async () => {
     try {
 
         await mongoose.connect(db, 
             {
-                useUnifiedTopology: true, 
-                useNewUrlParser: true 
+                useNewUrlParser: true ,
+                useCreateIndex: true,
+                useUnifiedTopology: true,    
+                useFindAndModify: false
             }
         );
 
@@ -22,4 +27,4 @@ const connectDB = async () => {
     }
 }
 
-module.exports = connectDB;
+module.exports = connectDB
