@@ -28,6 +28,27 @@ router.get('/user/:user_id', profileServices.getProfileByUserId);
 // @access   Private
 router.delete('/', auth, profileServices.deleteProfile);
 
+// @route    PUT api/profile/experience
+// @desc     Add profile experience
+// @access   Private
+router.put('/experience', auth, profileServices.addExperience)
+
+// @route    DELETE api/profile/experience/:exp_id
+// @desc     Delete experience from profile
+// @access   Private
+router.delete('/experience/:exp_id', auth, profileServices.deleteExperience);
+
+// @route    PUT api/profile/education
+// @desc     Add profile education
+// @access   Private
+router.put('/education', auth, profileServices.addEducation)
+
+
+// @route    DELETE api/profile/education/:edu_id
+// @desc     Delete education from profile
+// @access   Private
+router.delete('/education/:edu_id', auth, profileServices.deleteEducation);
+
 
 
 

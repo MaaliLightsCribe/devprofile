@@ -114,7 +114,121 @@ const deleteProfile = async (req, res) => {
     }
 };
 
+// PUT: Add profile experiance: Private
 
+const addExperience = async (req, res) => {
+    const { error } = validateExperience(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    const newExp = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+    }
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        profile.experience.unshift(newExp);
+        await profile.save();
+        res.json(profile);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error')
+    }
+}
+
+// Delete experience from profile: Private 
+const deleteExperience = async (req, res) => {
+    try {
+      const foundProfile = await Profile.findOne({ user: req.user.id });
+      const expIds = foundProfile.experience.map(exp => exp._id.toString());
+      // if i dont add .toString() it returns this weird mongoose coreArray and the ids are somehow objects and it still deletes anyway even if you put /experience/5
+      const removeIndex = expIds.indexOf(req.params.exp_id);
+      if (removeIndex === -1) {
+        return res.status(400).json({ msg: "Experience Not Exist against this exp_id" });
+      } else {
+        // theses console logs helped me figure it out
+        console.log("expIds", expIds);
+        console.log("typeof expIds", typeof expIds);
+        console.log("req.params", req.params);
+        console.log("removed", expIds.indexOf(req.params.exp_id));
+        foundProfile.experience.splice(removeIndex, 1);
+        await foundProfile.save();
+        return res.status(200).json(foundProfile);
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: "Server error" });
+    }
+  };
+
+
+// PUT: Add profile education: Private
+
+const addEducation = async (req, res) => {
+    const { error } = validateEducation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    const newEdu = {
+        school: req.body.school,
+        degree: req.body.degree,
+        fieldofstudy: req.body.fieldofstudy,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+    }
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        profile.education.unshift(newEdu);
+        await profile.save();
+        res.json(profile);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+}
+
+const deleteEducation = async (req, res) => {
+    try {
+      const foundProfile = await Profile.findOne({ user: req.user.id });
+      const eduIds = foundProfile.education.map(edu => edu._id.toString());
+    // if i dont add .toString() it returns this weird mongoose coreArray and the ids are somehow objects and it still deletes anyway even if you put /education/5
+    const removeIndex = eduIds.indexOf(req.params.edu_id);
+      if (removeIndex === -1) {
+        return res.status(400).json({ msg: "Education Not Exist against this edu_id" });
+      } else {
+        // theses console logs helped me figure it out
+        // console.log("eduIds", eduIds);
+        // console.log("typeof eduIds", typeof eduIds);
+        // console.log("req.params", req.params);
+        // console.log("removed", eduIds.indexOf(req.params.edu_id));
+        foundProfile.education.splice(removeIndex, 1);
+        await foundProfile.save();
+        return res.status(200).json(foundProfile);
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: "Server error" });
+    }
+  };
+
+
+
+
+// Export All Profile Sercices: 
+module.exports = {
+    getUserProfile,
+    createUpdateProfile,
+    getAllProfiles,
+    getProfileByUserId,
+    deleteProfile,
+    addExperience,
+    deleteExperience,
+    addEducation,
+    deleteEducation
+}
 
 // Validation Function:
 const validatePayload = (data) => {
@@ -128,11 +242,31 @@ const validatePayload = (data) => {
     });
 }
 
-// Export All Profile Sercices: 
-module.exports = {
-    getUserProfile,
-    createUpdateProfile,
-    getAllProfiles,
-    getProfileByUserId,
-    deleteProfile
+const validateExperience = (data) => {
+    const schema = joi.object({
+        title: joi.required(),
+        company: joi.required(),
+        from: joi.required()
+    })
+    return schema.validate({
+        title: data.title,
+        company: data.company,
+        from: data.from
+    })
 }
+
+const validateEducation = (data) => {
+    const schema = joi.object({
+        school: joi.required(),
+        degree: joi.required(),
+        fieldofstudy: joi.required(),
+        from: joi.required()
+    })
+    return schema.validate({
+        school: data.school,
+        degree: data.degree,
+        fieldofstudy: data.fieldofstudy,
+        from: data.from
+    })
+}
+
