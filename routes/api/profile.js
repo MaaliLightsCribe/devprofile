@@ -49,7 +49,10 @@ router.put('/education', auth, profileServices.addEducation)
 // @access   Private
 router.delete('/education/:edu_id', auth, profileServices.deleteEducation);
 
-
+// @route    GET api/profile/github/:username
+// @desc     Get user repos from Github
+// @access   Public
+router.get('/github/:username', profileServices.userGitRepo) 
 
 
 module.exports = router;

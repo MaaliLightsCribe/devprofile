@@ -1,4 +1,6 @@
 {
     "mongoURI": "mongodb+srv://mfkhan:abc831456@cluster0-mt7gl.mongodb.net/devprofile-dev?retryWrites=true&w=majority",
-    "jwtSecret": "devprofilconnector"
+    "jwtSecret": "devprofilconnector",
+    "githubClientId": "4045729dab32737340b7",
+    "githubSecret": "66c141087bfae4bfbf4c9faa3b3164be01f50d2e"
 }

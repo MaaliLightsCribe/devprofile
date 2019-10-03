@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/api/user');
 const authRoutes = require('./routes/api/auth');
 const profileRoutes = require('./routes/api/profile');
+const postRoutes = require('./routes/api/post');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => res.send('API Running'))
 router.use('/api/users', userRoutes);
 router.use('/api/auth', authRoutes);
 router.use('/api/profile', profileRoutes);
+router.use('/api/post', postRoutes);
 
 
 app.use(router);
