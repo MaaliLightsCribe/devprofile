@@ -12,7 +12,6 @@ const createUser = async (req, res) => {
     //console.log('body: ', req.body);
     const { error } = validatePayload(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    
     const { name, email, password } = req.body;
     try {
         // See if user exists: 
