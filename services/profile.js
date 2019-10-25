@@ -1,8 +1,10 @@
 const Profile = require('../models/Profile');
 const User = require('../models/User');
+const Post = require('../models/Post');
 const joi = require('@hapi/joi');
 const config = require('config');
 const request = require('request');
+
 
 
 //GET: current user Profile: 
@@ -153,10 +155,10 @@ const deleteExperience = async (req, res) => {
         return res.status(400).json({ msg: "Experience Not Exist against this exp_id" });
       } else {
         // theses console logs helped me figure it out
-        console.log("expIds", expIds);
-        console.log("typeof expIds", typeof expIds);
-        console.log("req.params", req.params);
-        console.log("removed", expIds.indexOf(req.params.exp_id));
+        // console.log("expIds", expIds);
+        // console.log("typeof expIds", typeof expIds);
+        // console.log("req.params", req.params);
+        // console.log("removed", expIds.indexOf(req.params.exp_id));
         foundProfile.experience.splice(removeIndex, 1);
         await foundProfile.save();
         return res.status(200).json(foundProfile);
