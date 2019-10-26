@@ -25,7 +25,7 @@ app.get('/', (req, res) => res.send('API Running'))
 router.use('/api/users', userRoutes);
 router.use('/api/auth', authRoutes);
 router.use('/api/profile', profileRoutes);
-router.use('/api/post', postRoutes);
+router.use('/api/posts', postRoutes);
 
 
 app.use(router);
