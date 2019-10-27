@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const path = require('path');
 
 
 //Load Routes:
@@ -20,16 +21,22 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //Define Routes:
-app.get('/', (req, res) => res.send('API Running'))
-
 router.use('/api/users', userRoutes);
 router.use('/api/auth', authRoutes);
 router.use('/api/profile', profileRoutes);
 router.use('/api/posts', postRoutes);
 
-
 app.use(router);
 
+// Serve static assets in production
+if(process.env.NODE_ENV === 'production') {
+    //Set Static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 
 // Server Start Setting: 

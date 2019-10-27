@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
             s: '200',   //default size
             r: 'pg',    //Rating
             d: 'mm'     //default image / user icon
-        })
+        });
         //create instance of user
         user = new User({
             name,
