@@ -8,12 +8,11 @@ mongoose.Promise = global.Promise;
 
 const connectDB = async () => {
     try {
-
-        await mongoose.connect(db, 
+        await mongoose.connect(db,
             {
-                useNewUrlParser: true ,
+                useNewUrlParser: true,
                 useCreateIndex: true,
-                useUnifiedTopology: true,    
+                useUnifiedTopology: true,
                 useFindAndModify: false
             }
         );

@@ -20,8 +20,9 @@ const UserSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    },
+    }
 })
 
 //Create Collection & add Schema:
 module.exports = User = mongoose.model('user', UserSchema);
+

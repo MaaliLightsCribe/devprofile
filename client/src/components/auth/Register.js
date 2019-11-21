@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from 'react';
-import  { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
-    const [ formData, setFormData ] = useState({
+    const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
@@ -16,17 +16,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
     const onSubmit = async e => {
         e.preventDefault();
-        if(password !== password2) setAlert('Password do not match', 'danger', 3000);
+        if (password !== password2) setAlert('Password do not match', 'danger', 3000);
         else register({ name, email, password });
     }
 
     //Redirect if Registerd
-    if(isAuthenticated) return <Redirect to='/dashboard' />;
+    if (isAuthenticated) return <Redirect to='/dashboard' />;
 
     return <Fragment>
         <h1 className="large text-primary">Sign Up</h1>
         <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
-        
+
         <form className="form" onSubmit={e => onSubmit(e)} action="create-profile.html">
 
             <div className="form-group">
@@ -39,7 +39,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             </div>
 
             <div className="form-group">
-                <input type="password" placeholder="Password" name="password" minLength="6" value={password} onChange={e => onChange(e)}  />
+                <input type="password" placeholder="Password" name="password" minLength="6" value={password} onChange={e => onChange(e)} />
             </div>
 
             <div className="form-group">
@@ -47,7 +47,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             </div>
 
             <input type="submit" className="btn btn-primary" value="Register" />
-        
+
         </form>
 
         <p className="my-1"> Already have an account? <Link to="/login">Sign In</Link> </p>
